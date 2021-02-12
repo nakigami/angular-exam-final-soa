@@ -1,0 +1,63 @@
+<div class="mt-4 alert alert-danger"
+     *ngIf="forbidden">
+  {{ forbidden }}
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <form #myForm="ngForm" (submit)="saveClient(client, myForm)">
+      <div class="form-group">
+        <label for="code">Code</label>
+        <input class="form-control"
+               [(ngModel)]="client.code"
+               id="code"
+               name="code"
+               type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input class="form-control"
+               [(ngModel)]="client.nom"
+               id="name"
+               name="name"
+               type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control"
+               [(ngModel)]="client.email"
+               id="email"
+               name="email"
+               type="email"/>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" *ngIf="!editMode" type="submit">Save</button>
+        <button class="btn btn-warning" *ngIf="editMode"  type="submit">Edit</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-8">
+    <table class="table table-striped" *ngIf="!forbidden">
+      <tr>
+        <th>ID</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let client of clients?._embedded?.clients">
+        <td>{{ client.id }}</td>
+        <td>{{ client.code }}</td>
+        <td>{{ client.nom }}</td>
+        <td>{{ client.email }}</td>
+        <td colspan="2">
+          <div class="d-flex align-content-center justify-content-center ml-0">
+            <button class="btn btn-sm btn-danger" (click)="deleteClient(client.id)">Delete</button>&nbsp;
+            <button class="btn btn-sm btn-warning" (click)="modifyClient(client)">Edit</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+

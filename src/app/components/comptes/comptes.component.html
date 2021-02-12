@@ -1,0 +1,81 @@
+<div class="mt-4 alert alert-danger"
+     *ngIf="forbidden">
+  {{ forbidden }}
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <form #myForm="ngForm" (submit)="saveCompte(compte, myForm)">
+      <div class="form-group">
+        <label for="code">Code</label>
+        <input class="form-control"
+               [(ngModel)]="compte.code"
+               id="code"
+               name="code"
+               type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="dateCreation">Date de création</label>
+        <input class="form-control"
+               [(ngModel)]="compte.dateCreation"
+               id="dateCreation"
+               name="dateCreation"
+               type="date"/>
+      </div>
+      <div class="form-group">
+        <label for="etat">Etat</label>
+        <input class="form-control"
+               [(ngModel)]="compte.etat"
+               id="etat"
+               name="etat"
+               type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <input class="form-control"
+               [(ngModel)]="compte.type"
+               id="type"
+               name="type"
+               type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="clientID">Client ID</label>
+        <input class="form-control"
+               [(ngModel)]="compte.client_ID"
+               id="clientID"
+               name="clientID"
+               type="number"/>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" *ngIf="!editMode" type="submit">Save</button>
+        <button class="btn btn-warning" *ngIf="editMode"  type="submit">Edit</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-8">
+    <table class="table table-striped" *ngIf="!forbidden">
+      <tr>
+        <th>Code</th>
+        <th>Date de création</th>
+        <th>Etat</th>
+        <th>Type</th>
+        <th>Client ID</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let compte of comptes?._embedded?.comptes">
+        <td>{{ compte.code }}</td>
+        <td>{{ compte.dateCreation | date }}</td>
+        <td>{{ compte.etat }}</td>
+        <td>{{ compte.type }}</td>
+        <td>{{ compte.client_ID }}</td>
+        <td colspan="2">
+          <div class="d-flex align-content-center justify-content-center ml-0">
+            <button class="btn btn-sm btn-danger" (click)="deleteCompte(compte.id)">Delete</button>&nbsp;
+            <button class="btn btn-sm btn-warning" (click)="modifyCompte(compte)">Edit</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
